@@ -30,6 +30,7 @@ public class Drawer : MonoBehaviour {
             {
                 value.SendMessage("EditStatusChanged", true);
             }
+            CursorWrapper.Cursor.SetActive(value == null);
             _sketch = value;
         }
     }
