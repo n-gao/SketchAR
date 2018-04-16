@@ -14,6 +14,7 @@ public class SketchLine : MonoBehaviour {
         }
         set
         {
+            print("hi");
             LineRenderer.startColor = value;
             LineRenderer.endColor = value;
         }

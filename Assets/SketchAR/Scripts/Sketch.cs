@@ -14,7 +14,8 @@ public class Sketch : MonoBehaviour {
         set
         {
             _color = value;
-            currentLine.Color = _color;
+            if (currentLine != null)
+                currentLine.Color = _color;
         }
     }
 
@@ -29,6 +30,12 @@ public class Sketch : MonoBehaviour {
     public void EditStatusChanged(bool status)
     {
         this.status = status;
+    }
+
+    public void SetColor(Color color)
+    {
+        print("why");
+        this.CurrentColor = color;
     }
 
     public void NewLine()

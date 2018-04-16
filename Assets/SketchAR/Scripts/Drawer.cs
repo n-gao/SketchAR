@@ -14,7 +14,7 @@ public class Drawer : MonoBehaviour {
     private uint sourceId;
 
     private GameObject _sketch;
-    private GameObject sketch
+    public GameObject sketch
     {
         get
         {
