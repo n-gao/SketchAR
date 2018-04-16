@@ -18,15 +18,18 @@ public class Sketch : MonoBehaviour {
         }
     }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Start()
+    {
+        var lookat = transform.position - (Camera.main.transform.position - transform.position);
+        transform.LookAt(lookat);
+    }
+
+    private bool status = false;
+
+    public void EditStatusChanged(bool status)
+    {
+        this.status = status;
+    }
 
     public void NewLine()
     {

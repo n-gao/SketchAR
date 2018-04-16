@@ -5,21 +5,46 @@ using UnityEngine.XR.WSA.Input;
 
 public class Drawer : MonoBehaviour {
 
+    public static Drawer Instance { get; private set; }
+
     public GameObject SketchPrefab;
     public float MinDistance = 0.05f;
     public Vector3 lastPoint = Vector3.zero;
 
     private uint sourceId;
 
-    private GameObject sketch;
+    private GameObject _sketch;
+    private GameObject sketch
+    {
+        get
+        {
+            return _sketch;
+        }
+        set
+        {
+            if (_sketch != null)
+            {
+                _sketch.SendMessage("EditStatusChanged", false);
+            }
+            if (value != null)
+            {
+                value.SendMessage("EditStatusChanged", true);
+            }
+            _sketch = value;
+        }
+    }
 
-	// Use this for initialization
-	void Start ()
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    // Use this for initialization
+    void Start ()
     {
         InteractionManager.InteractionSourcePressed += InteractionManagerOnSourcePressed;
         InteractionManager.InteractionSourceReleased += InteractionManagerOnSourceReleased;
         InteractionManager.InteractionSourceUpdated += InteractionManagerOnSourceUpdated;
-        StartSketch();
     }
 
     private void InteractionManagerOnSourcePressed(InteractionSourcePressedEventArgs args)
@@ -74,13 +99,20 @@ public class Drawer : MonoBehaviour {
         }
     }
 
-    void StartSketch()
+    public void EditSketch(GameObject sketch)
+    {
+        EndSketch();
+        this.sketch = sketch;
+    }
+
+    public void StartSketch()
     {
         EndSketch();
         sketch = Instantiate(SketchPrefab);
+        sketch.transform.position = transform.position + transform.forward * 1f;
     }
 
-    void EndSketch()
+    public void EndSketch()
     {
         sketch = null;
     }

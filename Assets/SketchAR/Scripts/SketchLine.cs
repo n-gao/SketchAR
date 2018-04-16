@@ -26,7 +26,7 @@ public class SketchLine : MonoBehaviour {
 
     public void AddPoint(Vector3 point)
     {
-        var localPos = transform.worldToLocalMatrix* point;
+        var localPos = transform.InverseTransformPoint(point);
         points.Add(localPos);
         print(points.Count);
         LineRenderer.positionCount = points.Count;
